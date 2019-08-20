@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import Cell from "./Cell";
 import './Board.css';
 
@@ -45,9 +45,9 @@ class Board extends Component {
 
   createBoard() {
     let board = [];
-    for(let y = 0; y < this.props.nrows; y++) {
+    for (let y = 0; y < this.props.nrows; y++) {
       let row = []
-      for(let x = 0; x < this.props.ncols; x++) {
+      for (let x = 0; x < this.props.ncols; x++) {
         row.push(Math.random() < this.props.changeLightStartsOn)
       }
       board.push(row)
@@ -58,7 +58,7 @@ class Board extends Component {
   /** handle changing a cell: update board & determine if winner */
 
   flipCellsAround(coord) {
-    let {ncols, nrows} = this.props;
+    let { ncols, nrows } = this.props;
     let board = this.state.board;
     let [y, x] = coord.split("-").map(Number);
 
@@ -72,10 +72,10 @@ class Board extends Component {
     }
 
     flipCell(y, x)
-    flipCell(y, x-1)
-    flipCell(y, x+1)
-    flipCell(y-1, x)
-    flipCell(y+1, x)
+    flipCell(y, x - 1)
+    flipCell(y, x + 1)
+    flipCell(y - 1, x)
+    flipCell(y + 1, x)
 
 
     // TODO: flip this cell and the cells around it
@@ -84,7 +84,7 @@ class Board extends Component {
     // TODO: determine is the game has been won
     let hasWon = board.every(row => row.every(cell => !cell))
 
-    this.setState({board, hasWon});
+    this.setState({ board, hasWon });
   }
 
 
@@ -92,7 +92,12 @@ class Board extends Component {
 
   render() {
     if (this.state.hasWon) {
-      return <h1>YOU WON!!</h1>
+      return (
+        <div>
+          <span className="neon-orange">YOU</span>
+          <span className="neon-blue">WON!</span>
+        </div>
+      )
     }
 
     let tableBoard = [];
@@ -106,11 +111,15 @@ class Board extends Component {
     }
 
     return (
-    <table className='Board'>
-      <tbody >
-        {tableBoard}
-      </tbody>
-    </table>
+      <div>
+        <span className="neon-orange">Lights</span>
+        <span className="neon-blue">Out</span>
+        <table className='Board'>
+          <tbody >
+            {tableBoard}
+          </tbody>
+        </table>
+      </div>
     )
   }
 }
